@@ -24,8 +24,14 @@ if [ $? -ne 0 ];then
     exit 1
 fi
 tput bold;echo "++++ CONNECTION FOUND, LET'S GO!" | lolcat
+#!/bin/bash
+
+# Ask user to enter domain and collaborator ID
 echo -e "\e[31mEnter domain (e.g. example.com):\e[0m"
 read domain
+
+echo -e "\e[31mEnter collaborator ID:\e[0m"
+read collaborator_id
 
 # Create a directory with the same name as the domain
 mkdir -p $domain
@@ -33,19 +39,26 @@ cd $domain
 
 # Find subdomains using Wayback Machine
 echo -e "\e[31mFinding subdomains using Wayback Machine...\e[0m"
-waybackurls $domain | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | sort -u > urls.txt
-
+waybackurls $domain --silent | sort -u > urls.txt
+sleep 1
 # Find live subdomains
 echo -e "\e[31mFinding live subdomains...\e[0m"
-cat urls.txt | httpx -silent -threads 20 -o live.txt
+cat urls.txt | httpx -verbose --follow-redirects -threads 20 -o live.txt | lolcat
+
 
 # Find URLs with parameters
 echo -e "\e[31mFinding URLs with parameters...\e[0m"
-cat live.txt | grep -Eo "(http|https)://[a-zA-Z0-9./?=_%:-]*" | grep -E "\?" | sort -u > urls_params.txt
+cat live.txt | qsreplace -a | grep -vE "(.gif|.jpeg|.jpg|.js|.png|.css)" | sort -u > urls_params.txt
+
+
+# Count the number of URLs
+url_count=$(wc -l < urls_params.txt)
+echo "Number of URLs found: $url_count" | lolcat
+sleep 1
 
 # Scan for XSS vulnerabilities using dalfox
 echo -e "\e[31mScanning for XSS vulnerabilities...\e[0m"
-cat urls_params.txt | dalfox pipe --waf-evasion -S --only-poc v --deep-domxss -o xss_results.txt
+dalfox file urls_params.txt --waf-evasion -S -b "https://$collaborator_id" --only-poc v -o xss_results.txt
 
 # Display results
 if [[ -s "xss_results.txt" ]]
@@ -55,4 +68,3 @@ then
 else
     echo -e "\e[31mNo XSS vulnerabilities found.\e[0m"
 fi
-#Written by Chris SaintDruG Abou-Chabke experimenting
