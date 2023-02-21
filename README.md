@@ -1,4 +1,4 @@
-# BHEH's Dalfoxoneliner
+# BHEH's Dalfox-burp-oneliner
 
 <p align="center">
 <a href="https://www.blackhatethicalhacking.com"><img src="https://pbs.twimg.com/profile_banners/770898848197795840/1650879597/1500x500" width="600px" alt="BHEH"></a>
@@ -9,26 +9,29 @@
 
 <p align="center">
 
-**Dalfoxoneliner - Unleashing the Red Fury in XSS**
+**Dalfox-burp-oneliner - Unleashing the Red Fury in XSS**
 
-Dalfoxoneliner is written by Chris "SaintDruG" Abou-Chabke from Black Hat Ethical Hacking and is designed for Red Teams and Bug Bounty Hunters!
+Dalfox-burp-oneliner is written by Chris "SaintDruG" Abou-Chabke from Black Hat Ethical Hacking and is designed for Red Teams and Bug Bounty Hunters!
 </p>
 
 # Description
 
-Dalfoxoneliner is currently an experimentation - Personal Workflow for Bug Bounty - XSS
+Dalfox-burp-oneliner is currently an experimentation - Personal Workflow for Bug Bounty - XSS - To use it, you must have Burp Installed, so you can give it the Collaborator Payload, and as it does the attack, it will exploit it, and you will get the response in burp!
+
+
 
 # Installation
 
-`git clone https://github.com/blackhatethicalhacking/dalfoxoneliner.git`
+`git clone https://github.com/blackhatethicalhacking/dalfox-burp-oneliner.git`
 
-`cd dalfoxoneliner`
+`cd dalfox-burp-oneliner`
 
-`chmod +x dalfoxoneliner.sh`
+`chmod +x dalfox-burp-oneliner.sh`
 
-`./dalfoxoneliner.sh`
+`./dalfox-burp-oneliner.sh`
 
 - The script will prompt you to provide the domain
+- The script will prompt you to provide the Payload from Burp's Collaborator
 
 # Compatibility: 
 
