@@ -58,7 +58,7 @@ sleep 1
 
 # Scan for XSS vulnerabilities using dalfox
 echo -e "\e[31mScanning for XSS vulnerabilities...\e[0m"
-dalfox file urls_params.txt --waf-evasion -S -b "https://$collaborator_id" --only-poc v -o xss_results.txt
+dalfox file urls_params.txt --waf-evasion -S -b "https://$collaborator_id" --only-poc v --remote-payloads portswigger,payloadbox -o xss_results.txt
 
 # Display results
 if [[ -s "xss_results.txt" ]]
